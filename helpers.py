@@ -29,7 +29,7 @@ def generate_data_payload():
 def register_new_courier_and_return_password():
     login_pass = []
     payload = generate_data_payload()
-    response = requests.post(Endpoint.create_courier, data = payload)
+    response = requests.post(Endpoint.create_courier, data=payload)
     if response.status_code == 201:
         login_pass.append(payload['login'])
         login_pass.append(payload['password'])
@@ -38,7 +38,7 @@ def register_new_courier_and_return_password():
 
 @allure.step('Удаляем курьера')
 def delete_courier(login, password):
-    response_post = requests.post(Endpoint.login_courier, data = {
+    response_post = requests.post(Endpoint.login_courier, data={
         'login': login,
         'password': password
     })
