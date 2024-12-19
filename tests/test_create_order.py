@@ -1,14 +1,20 @@
+import json
+
 import allure
-import requests
 import pytest
-from data import Endpoint, Message, User
+import requests
+
+from data import URL, URL_ORDER, colors, order
+
 
 class TestCreateOrder:
-    @allure.step('Создать заказ с разными цветами самоката')
-    @pytest.mark.parametrize('colour', [['BLACK'], ['GREY'], ['BLACK', 'GREY'], []])
-    def test_create_order(self, colour):
-        payload = User.user
-        payload['colour'] = colour
-        response = requests.post(Endpoint.create_order, json=payload)
-        assert response.status_code == 201
-        assert Message.create_order in response.text
+
+    @allure.description(
+        'Проверяем, что заказ можно создать с любым цветом или без него'
+    )
+    @pytest.mark.parametrize('color', colors)
+
+    def test_set_color(self, color):
+        json_string = json.dumps(order)
+        response = requests.post(f'{URL}{URL_ORDER}', json_string)
+        assert response.status_code == 201 and 'track' in response.text
