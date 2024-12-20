@@ -1,40 +1,63 @@
-URL = 'http://qa-scooter.praktikum-services.ru/api/v1'
-URL_COURIER = '/courier'
-URL_LOGIN = '/courier/login'
-URL_ORDER = '/orders'
+class Data:
+    valid_login = 'Max1994'
+    valid_password = 'qwerty'
+    valid_firstname = 'Max'
+    valid_courier_data = {'login': 'Max1994', 'password': 'qwerty', 'firstName': 'Max'}
+    courier_data_without_name = {'login': 'Max1994', 'password': '1234'}
+    courier_data_with_wrong_password = {'login': 'Max1994', 'password': '123456'}
 
-payload_first = {
-    "login": "Identycal_login",
-    "password": "qwer1234",
-    "firstName": "Ivaan"
-}
 
-payload_second = {
-    "login": "Identycal_login",
-    "password": "1234qwer",
-    "firstName": "Denil"
-}
+class OrderData:
+    order_data_grey_1 = {
+        'firstName': 'Геральт',
+        'lastName': 'ИзРивии',
+        'address': 'Новиградский проспект, 16',
+        'metroStation': 8,
+        'phone': '+78005553535',
+        'rentTime': 3,
+        'deliveryDate': '2024-06-26',
+        'comment': 'Хм, распогодилось :)',
+        'color': [
+            'GREY'
+        ]
+    }
 
-colors = ['"BLACK"',
-          '"GREY"',
-          '"BLACK", "GREY"',
-         None
-         ]
+    order_data_black_2 = {
+        'firstName': 'Йеннифэр',
+        'lastName': 'изВенгерберга',
+        'address': 'Туссент, улица Яблоневая',
+        'metroStation': 10,
+        'phone': '+78888888888',
+        'rentTime': 7,
+        'deliveryDate': '2024-06-28',
+        'comment': '— Правда, — сказала пустельга, — это осколок льда.',
+        'color': [
+            'BLACK'
+        ]
+    }
 
-orderEndpoints = ['orders?courierId=335921',
-          'orders?courierId=335921&nearestStation=["1", "2"]',
-         'orders?limit=10&page=0&nearestStation=["110"]'
-         ]
+    order_data_two_colors_3 = {
+        'firstName': 'Цирилла Фиона',
+        'lastName': 'Рианнон',
+        'address': 'Шалфей и Розмарин',
+        'metroStation': 15,
+        'phone': '+70009991122',
+        'rentTime': 1,
+        'deliveryDate': '2024-06-30',
+        'comment': 'Ужасненько хочется покататься!',
+        'color': [
+            'BLACK', 'GREY'
+        ]
+    }
 
-color = None
-order = {
-    "firstName": "Ilyusha",
-    "lastName": "Ivanov",
-    "address": "Kostroma.45",
-    "metroStation": 3,
-    "phone": "+7 999 888 44 22",
-    "rentTime": 5,
-    "deliveryDate": "2020-07-07",
-    "comment": "Vchera",
-    "color": [color]
-}
+    order_data_no_colors_4 = {
+        'firstName': 'Калантэ',
+        'lastName': 'ArdRhena',
+        'address': 'Замок Цинтры',
+        'metroStation': 20,
+        'phone': '+77777777777',
+        'rentTime': 2,
+        'deliveryDate': '2024-06-27',
+        'comment': 'Сопротивляться судьбе может быть не менее рискованно, чем отдать себя в ее руки',
+        'color': []
+    }
