@@ -1,16 +1,9 @@
-from faker import Faker
+import pytest
+from methods.courier_methods import CourierMethods
 
-fake = Faker()
-fakeRU = Faker(locale='ru_RU')
-
-def create_random_login():
-    login = fake.text(max_nb_chars=6) + str(fake.random_int(0, 999))
-    return login
-
-def create_random_password():
-    password = fake.password(length=10, special_chars=True, digits=True, upper_case=True, lower_case=True)
-    return password
-
-def create_random_firstname():
-    first_name = fakeRU.first_name()
-    return first_name
+@pytest.fixture
+def courier_data():
+    courier_methods = CourierMethods()
+    data = courier_methods.generate_courier_data()
+    yield data
+    courier_methods.delete_courier(data['login'], data['password'])
