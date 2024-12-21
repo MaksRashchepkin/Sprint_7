@@ -1,23 +1,16 @@
-import pytest
-import requests
+from faker import Faker
 
-from data_static import MAIN_URL, LOGIN, PASSWORD, CREATE_COURIER_URL, LOGIN_COURIER_URL, FIRST_NAME
+fake = Faker()
+fakeRU = Faker(locale='ru_RU')
 
+def create_random_login():
+    login = fake.text(max_nb_chars=6) + str(fake.random_int(0, 999))
+    return login
 
-@pytest.fixture()
-def delete_courier():
-    yield
-    # Получить id курьера
-    payload = {"login": LOGIN, "password": PASSWORD}
-    response = requests.post(f'{MAIN_URL}{LOGIN_COURIER_URL}', data=payload)
-    id_courier = response.json()['id']
+def create_random_password():
+    password = fake.password(length=10, special_chars=True, digits=True, upper_case=True, lower_case=True)
+    return password
 
-    # Удалить курьера, который был создан
-    requests.delete(f'{MAIN_URL}{CREATE_COURIER_URL}/{id_courier}')
-
-
-@pytest.fixture()
-def create_courier():
-    # Создать нового курьера
-    payload = {"login": LOGIN, "password": PASSWORD, "firstName": FIRST_NAME}
-    requests.post(f'{MAIN_URL}{CREATE_COURIER_URL}', data=payload)
+def create_random_firstname():
+    first_name = fakeRU.first_name()
+    return first_name
