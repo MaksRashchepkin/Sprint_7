@@ -2,7 +2,7 @@ import allure
 import pytest
 from methods.order_methods import OrderMethods
 
-@allure.epic("Тестирование Заказов")
+@allure.epic("Тестирование на создание заказа")
 class TestCreateOrder:
     order_methods = OrderMethods()
 
@@ -13,17 +13,17 @@ class TestCreateOrder:
         ([])
     ])
     @allure.title("Тест на создание заказа")
-    @allure.description("Проверяет, что, когда создаёшь заказ: можно указать один из цветов — BLACK или GREY, можно указать оба цвета, можно совсем не указывать цвет, тело ответа содержит track.")
+    @allure.description("Проверка, что, когда создаёшь заказ: можно указать один из цветов — BLACK или GREY, можно указать оба цвета, можно совсем не указывать цвет, тело ответа содержит track.")
     def test_create_order(self, color):
         order_data = {
-            "first_name": "Naruto",
-            "last_name": "Uchiha",
-            "address": "Konoha, 142 apt.",
-            "metro_station": 4,
-            "phone": "+7 800 355 35 35",
-            "rent_time": 5,
-            "delivery_date": "2020-06-06",
-            "comment": "Saske, come back to Konoha",
+            "first_name": "Maksim",
+            "last_name": "Rashchepkin",
+            "address": "Kirova, 25",
+            "metro_station": 5,
+            "phone": "+79143295157",
+            "rent_time": 2,
+            "delivery_date": "2024-12-25",
+            "comment": "Zvonit zaranee",
             "color": color
         }
 

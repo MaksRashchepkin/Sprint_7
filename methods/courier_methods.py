@@ -1,15 +1,11 @@
 import random
 import string
-
 import allure
 import requests
-
-from data import COURIER_REGISTRATION_URL, COURIER_LOGIN_URL
-
+from data import Urls
 
 class CourierMethods:
-
-    @allure.step("Генерируем данные для регистрации курьера")
+    @allure.step("Генерация данных для регистрации курьера")
     def generate_courier_data(self):
         # метод генерирует строку, состоящую только из букв нижнего регистра, в качестве параметра передаём длину строки
         def generate_random_string(length):
@@ -31,15 +27,15 @@ class CourierMethods:
         }
         return payload
 
-    @allure.step("Создаем курьера")
+    @allure.step("Создание курьера")
     def create_courier(self, payload):
-        return requests.post(COURIER_REGISTRATION_URL, json=payload)
+        return requests.post(Urls.COURIER_REGISTRATION_URL, json=payload)
 
     @allure.step("Логинимся как курьер")
     def login_courier(self, payload):
-        return requests.post(COURIER_LOGIN_URL, json=payload)
+        return requests.post(Urls.COURIER_LOGIN_URL, json=payload)
 
-    @allure.step("Получаем ID курьера")
+    @allure.step("Получение ID курьера")
     def get_courier_id(self, login, password):
         login_payload = {
             "login": login,
@@ -48,13 +44,13 @@ class CourierMethods:
         login_response = self.login_courier(login_payload)
         return login_response.json().get("id")
 
-    @allure.step("Удаляем курьера через логин и пароль")
+    @allure.step("Удаление курьера через логин и пароль")
     def delete_courier(self, login, password):
         courier_id = self.get_courier_id(login, password)
-        response = requests.delete(f'{COURIER_REGISTRATION_URL}/{courier_id}')
+        response = requests.delete(f'{Urls.COURIER_REGISTRATION_URL}/{courier_id}')
         return response
 
-    @allure.step("Удаляем курьера с ID")
+    @allure.step("Удаление курьера с ID")
     def delete_courier_with_id(self, courier_id):
-        response = requests.delete(f'{COURIER_REGISTRATION_URL}/{courier_id}')
+        response = requests.delete(f'{Urls.COURIER_REGISTRATION_URL}/{courier_id}')
         return response

@@ -1,13 +1,12 @@
 import allure
-import pytest
 from methods.courier_methods import CourierMethods
 
-@allure.epic("Тестирование Удаления Курьера")
+@allure.epic("Тестирование на удаление курьера")
 class TestDeleteCourier:
     courier_methods = CourierMethods()
 
     @allure.title("Тест на успешное удаление курьера")
-    @allure.description("Проверяет, что курьер успешно удаляется и возвращает статус 200.")
+    @allure.description("Проверка, что курьер успешно удаляется и возвращает статус 200.")
     def test_delete_courier_success(self):
         payload = self.courier_methods.generate_courier_data()
         self.courier_methods.create_courier(payload)
@@ -17,7 +16,7 @@ class TestDeleteCourier:
         assert dlt.json() == {'ok': True}
 
     @allure.title("Тест на удаление курьера без указания ID")
-    @allure.description("Проверяет, что попытка удалить курьера без указания ID возвращает статус 404.")
+    @allure.description("Проверка, что попытка удалить курьера без указания ID возвращает статус 404.")
     def test_delete_courier_no_id(self):
         payload = self.courier_methods.generate_courier_data()
         self.courier_methods.create_courier(payload)
@@ -27,7 +26,7 @@ class TestDeleteCourier:
         assert dlt_response.json()["message"] == 'Not Found.'
 
     @allure.title("Тест на удаление курьера с несуществующим ID")
-    @allure.description("Проверяет, что удаление курьера с несуществующим ID возвращает статус 404.")
+    @allure.description("Проверка, что удаление курьера с несуществующим ID возвращает статус 404.")
     def test_delete_courier_nonexistent_id(self):
         response = self.courier_methods.delete_courier_with_id(99999)
         assert response.status_code == 404

@@ -1,25 +1,23 @@
 import time
-
 import allure
-
-from data import ORDER_DATA_1
+from data import OrderData
 from methods.courier_methods import CourierMethods
 from methods.order_methods import OrderMethods
 
-@allure.epic("Тестирование Принятия Заказов")
+@allure.epic("Тестирование на принятие заказов")
 class TestOrderAcceptance:
     order_methods = OrderMethods()
     courier_methods = CourierMethods()
 
     @allure.title("Тест на успешное принятие заказа")
-    @allure.description("Создает курьера и заказ, затем проверяет успешное принятие заказа курьером.")
+    @allure.description("Создание курьера и заказа, затем проверка на успешное принятие заказа курьером.")
     def test_accept_order_success(self):
 
         courier_payload = self.courier_methods.generate_courier_data()
         self.courier_methods.create_courier(courier_payload)
         courier_id = self.courier_methods.get_courier_id(courier_payload['login'], courier_payload['password'])
 
-        response = self.order_methods.create_order(ORDER_DATA_1)
+        response = self.order_methods.create_order(OrderData.ORDER_DATA_1)
         assert response.status_code == 201
 
         order_data = response.json()
@@ -37,9 +35,9 @@ class TestOrderAcceptance:
 
 
     @allure.title("Тест на принятие заказа без указания ID курьера")
-    @allure.description("Проверяет, что попытка принятия заказа без указания ID курьера возвращает статус 400.")
+    @allure.description("Проверка, что попытка принятия заказа без указания ID курьера возвращает статус 400.")
     def test_accept_order_missing_courier_id(self):
-        response = self.order_methods.create_order(ORDER_DATA_1)
+        response = self.order_methods.create_order(OrderData.ORDER_DATA_1)
         order_data = response.json()
         order_id = str(order_data["track"])
         acceptance = self.order_methods.accept_order(order_id, courier_id= None)
@@ -47,9 +45,9 @@ class TestOrderAcceptance:
         assert acceptance.json()["message"] == "Недостаточно данных для поиска"
 
     @allure.title("Тест на принятие заказа с невалидным ID курьера")
-    @allure.description("Проверяет, что принятие заказа с невалидным ID курьера возвращает статус 404.")
+    @allure.description("Проверка, что принятие заказа с невалидным ID курьера возвращает статус 404.")
     def test_accept_order_invalid_courier_id(self):
-        response = self.order_methods.create_order(ORDER_DATA_1)
+        response = self.order_methods.create_order(OrderData.ORDER_DATA_1)
         order_data = response.json()
         order_id = str(order_data["track"])
         acceptance = self.order_methods.accept_order(order_id, courier_id=-1)
@@ -57,7 +55,7 @@ class TestOrderAcceptance:
         assert acceptance.json()["message"] == "Курьера с таким id не существует"
 
     @allure.title("Тест на принятие заказа без указания ID заказа")
-    @allure.description("Проверяет, что принятие заказа без указания ID заказа возвращает статус 404.")
+    @allure.description("Проверка, что принятие заказа без указания ID заказа возвращает статус 404.")
     def test_accept_order_missing_order_id(self):
         courier_payload = self.courier_methods.generate_courier_data()
         self.courier_methods.create_courier(courier_payload)
@@ -68,7 +66,7 @@ class TestOrderAcceptance:
         assert acceptance.json()["message"] == "Not Found."
 
     @allure.title("Тест на принятие заказа с невалидным ID заказа")
-    @allure.description("Проверяет, что принятие заказа с невалидным ID заказа возвращает статус 404.")
+    @allure.description("Проверка, что принятие заказа с невалидным ID заказа возвращает статус 404.")
     def test_accept_order_invalid_order_id(self):
         courier_payload = self.courier_methods.generate_courier_data()
         self.courier_methods.create_courier(courier_payload)
