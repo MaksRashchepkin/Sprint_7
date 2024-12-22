@@ -2,7 +2,7 @@ import allure
 import pytest
 from methods.courier_methods import CourierMethods
 
-@allure.epic("Тест на логин курьера")
+@allure.epic("Тестирование Логина Курьеров")
 class TestLoginCourier:
     courier_methods = CourierMethods()
 
@@ -13,7 +13,7 @@ class TestLoginCourier:
         ({"login": "", "password": ""}, 400, "Недостаточно данных для входа"),  # Отсутствие полей
     ])
     @allure.title("Тест на вход с некорректными данными")
-    @allure.description("Проверка, что вход с некорректными или отсутствующими данными возвращает ожидаемые ошибки.")
+    @allure.description("Проверяет, что вход с некорректными или отсутствующими данными возвращает ожидаемые ошибки.")
     def test_login_courier_with_invalid_data(self, payload, expected_status, expected_message):
         response = self.courier_methods.login_courier(payload)
         assert response.status_code == expected_status
@@ -25,13 +25,15 @@ class TestLoginCourier:
         payload = courier_data
         self.courier_methods.create_courier(payload)
         response = self.courier_methods.login_courier(payload)
+
         assert response.status_code == 200
-        assert "id" in response.json() # Ожидали получить id курьера
+        assert "id" in response.json(), "Ожидали получить id курьера"
 
     @allure.title("Тест на вход несуществующего курьера")
-    @allure.description("Проверка, что попытка входа с несуществующим логином возвращает статус 404.")
+    @allure.description("Проверяет, что попытка входа с несуществующим логином возвращает статус 404.")
     def test_login_nonexistent_courier(self):
         payload = {"login": "nonexistent_login", "password": "wrong_password"}
         response = self.courier_methods.login_courier(payload)
+
         assert response.status_code == 404
         assert response.json()['message'] == "Учетная запись не найдена"

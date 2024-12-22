@@ -2,12 +2,12 @@ import allure
 import pytest
 from methods.order_methods import OrderMethods
 
-@allure.epic("Тест на получение списка заказов")
+@allure.epic("Тестирование Получения Списка Заказов")
 class TestGetOrders:
     order_methods = OrderMethods()
 
     @allure.title("Тест на получение списка заказов")
-    @allure.description("Проверка, что запрос на получение списка заказов возвращает статус 200 и корректную структуру ответа.")
+    @allure.description("Проверяет, что запрос на получение списка заказов возвращает статус 200 и корректную структуру ответа.")
     def test_get_orders(self):
         response = self.order_methods.get_orders()
 
